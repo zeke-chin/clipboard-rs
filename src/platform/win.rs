@@ -440,7 +440,7 @@ impl<T: ClipboardHandler> ClipboardWatcher<T> for ClipboardWatcherContext<T> {
 				}
 				Ok(false) => {
 					// no change
-					thread::park_timeout(Duration::from_millis(200));
+					thread::park_timeout(Duration::from_millis(300));
 					continue;
 				}
 				Err(e) => {

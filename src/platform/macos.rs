@@ -62,7 +62,7 @@ impl<T: ClipboardHandler> ClipboardWatcher<T> for ClipboardWatcherContext<T> {
 			// if receive stop signal, break loop
 			if self
 				.stop_receiver
-				.recv_timeout(Duration::from_millis(500))
+				.recv_timeout(Duration::from_millis(300))
 				.is_ok()
 			{
 				break;

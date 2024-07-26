@@ -201,7 +201,7 @@ impl InnerContext {
 			let (event, seq) = match ctx.conn.poll_for_event_with_sequence()? {
 				Some(event) => event,
 				None => {
-					thread::park_timeout(Duration::from_millis(50));
+					thread::park_timeout(Duration::from_millis(300));
 					continue;
 				}
 			};

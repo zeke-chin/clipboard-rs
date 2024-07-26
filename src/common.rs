@@ -111,6 +111,9 @@ pub trait RustImage: Sized {
 	/// width and height
 	fn get_size(&self) -> (u32, u32);
 
+	/// img bytes
+	fn get_bytes(&self) -> &[u8];
+
 	/// Scale this image down to fit within a specific size.
 	/// Returns a new image. The image's aspect ratio is preserved.
 	/// The image is scaled to the maximum possible size that fits
@@ -195,6 +198,13 @@ impl RustImage for RustImageData {
 
 	fn get_size(&self) -> (u32, u32) {
 		(self.width, self.height)
+	}
+
+	fn get_bytes(&self) -> &[u8] {
+		match &self.data {
+			Some(img) => img.as_bytes(),
+			None => &[]
+		}
 	}
 
 	fn thumbnail(&self, width: u32, height: u32) -> Result<Self> {

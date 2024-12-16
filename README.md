@@ -3,7 +3,7 @@
 [![Latest version](https://img.shields.io/crates/v/clipboard-rs?color=mediumvioletred)](https://crates.io/crates/clipboard-rs)
 [![Documentation](https://docs.rs/clipboard-rs/badge.svg)](https://docs.rs/clipboard-rs)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ChurchTao/clipboard-rs/test.yml)
-![MSRV](https://img.shields.io/badge/rustc-1.63+-blue.svg)
+![MSRV](https://img.shields.io/badge/rustc-1.67+-blue.svg)
 ![GitHub License](https://img.shields.io/github/license/ChurchTao/clipboard-rs)
 
 clipboard-rs is a cross-platform library written in Rust for getting and setting the system-level clipboard content. It supports Linux, Windows, and MacOS.
@@ -31,7 +31,7 @@ Add the following content to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-clipboard-rs = "0.1.8"
+clipboard-rs = "0.2.2"
 ```
 
 ## [CHANGELOG](CHANGELOG.md)
@@ -173,6 +173,22 @@ fn main() {
 
 ```
 
+## X11 - Clipboard Read Timeout
+
+By default, in X11 clipboard-rs implements a read timeout of 500 ms. You can override or disable this timeout by creating **ClipboardContext** using `new_with_options`:
+
+```rust
+#[cfg(unix)]
+fn setup_clipboard() -> ClipboardContext {
+	ClipboardContext::new_with_options(ClipboardContextX11Options { read_timeout: None }).unwrap()
+}
+
+#[cfg(not(unix))]
+fn setup_clipboard(ctx: &mut ClipboardContext) -> ClipboardContext{
+	ClipboardContext::new().unwrap()
+}
+```
+
 ## Contributing
 
 You are welcome to submit PRs and issues and contribute your code or ideas to the project. Due to my limited level, the library may also have bugs. You are welcome to point them out and I will modify them as soon as possible.
@@ -181,6 +197,12 @@ You are welcome to submit PRs and issues and contribute your code or ideas to th
 
 - API design is inspired by [electron](https://www.electronjs.org/zh/docs/latest/api/clipboard)
 - Linux part of the project code is referenced from [x11-clipboard](https://github.com/quininer/x11-clipboard/tree/master)
+
+## Contract
+
+if you have any questions, you can contact me by email: `swkzymlyy@gmail.com`
+
+Chinese users can also contact me by wechatNo: `uniq_idx_church_lynn`
 
 ## License
 

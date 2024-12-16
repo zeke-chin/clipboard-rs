@@ -23,7 +23,7 @@ clipboard-rs 是一个用 Rust 语言编写的跨平台库，用于获取和设�
 
 ```toml
 [dependencies]
-clipboard-rs = "0.1.8"
+clipboard-rs = "0.2.2"
 ```
 
 ## [更新日志](CHANGELOG.md)
@@ -166,6 +166,22 @@ fn main() {
 
 ```
 
+## X11 - 读取超时设定
+
+默认读取超时时间为 500ms，但是遇到大图片，等数据流比较大的东西时，有可能就读取中断失败了。你可以通过 **ClipboardContext** `new_with_options` 重设超时时间:
+
+```rust
+#[cfg(unix)]
+fn setup_clipboard() -> ClipboardContext {
+	ClipboardContext::new_with_options(ClipboardContextX11Options { read_timeout: None }).unwrap()
+}
+
+#[cfg(not(unix))]
+fn setup_clipboard(ctx: &mut ClipboardContext) -> ClipboardContext{
+	ClipboardContext::new().unwrap()
+}
+```
+
 ## 贡献
 
 欢迎提交 PR 和 issue，为项目贡献你的代码或者想法。由于本人水平有限，库也可能会有 bug，欢迎大家指出，我会第一时间修改。
@@ -174,6 +190,12 @@ fn main() {
 
 - API 设计灵感来自于 [electron](https://www.electronjs.org/zh/docs/latest/api/clipboard)
 - Linux 部分项目代码参考自 [x11-clipboard](https://github.com/quininer/x11-clipboard/tree/master)
+
+## 联系我
+
+邮箱: `swkzymlyy@gmail.com`
+
+微信号: `uniq_idx_church_lynn`
 
 ## 许可证
 
